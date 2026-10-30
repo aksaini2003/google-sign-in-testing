@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Connect your Google account</title>
+<style>
+  :root { --bg:#f6f7f9; --card:#fff; --text:#1a1a1a; --muted:#666; --ok:#137333; --err:#b3261e; --border:#dadce0; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#161618; --card:#222225; --text:#f2f2f2; --muted:#a0a0a0; --ok:#81c995; --err:#f28b82; --border:#3c4043; }
+  }
+  body { margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center;
+         font-family:system-ui,sans-serif; background:var(--bg); color:var(--text); }
+  .card { background:var(--card); border:1px solid var(--border); border-radius:12px;
+          padding:32px; max-width:380px; width:90%; text-align:center; }
+  h1 { font-size:1.25rem; margin:0 0 8px; }
+  p { color:var(--muted); font-size:.9rem; line-height:1.5; }
+  .btn { display:inline-flex; align-items:center; gap:10px; margin-top:16px; padding:10px 18px;
+         border:1px solid var(--border); border-radius:8px; background:var(--card); color:var(--text);
+         text-decoration:none; font-weight:500; }
+  .btn:hover { background:var(--bg); }
+  #status { margin-top:16px; font-weight:500; }
+  .ok { color:var(--ok); } .err { color:var(--err); }
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>Connect your Google account</h1>
+  <p>Sign in and allow access to Gmail and Drive. No tokens or secrets to copy.</p>
+  <a class="btn" href="/api/login">
+    <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.9 2.4 30.4 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.1C12.4 13.6 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.5 5.8c4.4-4.1 7.1-10.1 7.1-17.5z"/><path fill="#FBBC05" d="M10.5 28.7A14.5 14.5 0 0 1 9.5 24c0-1.6.3-3.2.8-4.7l-7.9-6.1A24 24 0 0 0 0 24c0 3.9.9 7.5 2.6 10.8l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.5-5.8c-2.1 1.4-4.8 2.3-8.4 2.3-6.3 0-11.6-4.1-13.5-9.8l-7.9 6.1C6.5 42.6 14.6 48 24 48z"/></svg>
+    Sign in with Google
+  </a>
+  <div id="status"></div>
+</div>
+<script>
+  const p = new URLSearchParams(location.search);
+  const s = document.getElementById("status");
+  if (p.get("status") === "ok") { s.className = "ok"; s.textContent = "Connected: " + p.get("email"); }
+  if (p.get("status") === "error") { s.className = "err"; s.textContent = "Failed: " + (p.get("msg") || "unknown error"); }
+</script>
+</body>
+</html>
